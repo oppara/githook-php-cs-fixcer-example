@@ -1,0 +1,6 @@
+### https://raw.github.com/github/gitignore/e32de69dc7a71f84b1da648a5d893dd8bcc87d8a/Composer.gitignore
+
+composer.phar
+/vendor/
+
+.php-cs-fixer.cache

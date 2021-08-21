@@ -1,0 +1,26 @@
+#!/bin/bash
+
+ROOT_DIR=$(git rev-parse --show-toplevel)
+PHP_CS_FIXER="${ROOT_DIR}/vendor/bin/php-cs-fixer fix --stop-on-violation --using-cache=no"
+
+LIST=$(git diff-index --cached --name-status HEAD -- | grep -E '^[AUM].*\.php$' | cut -c3-)
+HAS_ERROR=false
+
+for file in $LIST; do
+  target="${ROOT_DIR}/${file}"
+
+  if php -l "${target}" >/dev/null; then
+    if ${PHP_CS_FIXER} "${target}" >/dev/null 2>&1; then
+      git add "${target}"
+    else
+      HAS_ERROR=true
+    fi
+  else
+    HAS_ERROR=true
+  fi
+done
+
+if "${HAS_ERROR}"; then
+  echo -e "\033[31mCommit failed\033[m"
+  exit 1
+fi
