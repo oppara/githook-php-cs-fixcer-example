@@ -1,13 +1,13 @@
-#  php-git-precommit-hook
+#  githook-php-cs-fixcer-example
 
-Git コミットフックで PHP-CS-Fixer を実行する。
+Git のコミットフックで PHP-CS-Fixer を実行する。
 
-`.git/hooks/pre-commit` ではなく、`core.hooksPath` オプションでプロジェクトの Git フックのディレクトリを指定し、
- Git の機能だけで Git フックのコードをバージョン管理し、プロジェクトのセットアップ時にプロジェクトごとの Git フックを設定できるようにする。
+`core.hooksPath`オプションでプロジェクトの Git フックのディレクトリを指定し、
+Git の機能だけで フックのコードをバージョン管理し、プロジェクトのセットアップ時に Git フックの設定をできるようにする。
 
 ## プロジェクトでの設定方法
 
-`composer.json` の `scripts.pre-command-run` で、core.hooksPath を設定する。
+`composer.json`の`scripts.pre-command-run`で、core.hooksPath を設定する。
 
 ```
 "scripts": {
@@ -17,8 +17,14 @@ Git コミットフックで PHP-CS-Fixer を実行する。
 }
 ```
 
-何かしらの composer のコマンドを実行すると `pre-command-run` スクリプトが実行されて、`.githooks` ディレクトリが Git フックとして扱われる。
+何かしらの composer のコマンドを実行すると`pre-command-run`スクリプトが実行されて、`.githooks`ディレクトリが Git フックとして扱われる。
 
+
+## Docker 使う場合
+
+```
+docker run --rm -it -w /app -v ${PWD}:/app oskarstark/php-cs-fixer-ga:latest /path/to/target
+```
 
 ## 参考
 
